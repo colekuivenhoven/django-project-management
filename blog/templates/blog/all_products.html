@@ -1,0 +1,152 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<script>
+	$(document).ready(function(){
+	 $('#list-tab a[href="{% url 'all-products' %}"]').tab('show')
+	});
+</script>
+	{% if user.is_authenticated %}
+		<article class="media content-section-side shadow_effect_only"
+			onmouseover="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').addClass('show');"
+			onmouseout="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').removeClass('show');">
+		<!-- Mobile -->
+		{% if request.user_agent.is_mobile %}
+			<a href="{% url 'profile' %}"><img class="rounded-circle site-header-img" src="{{ user.profile.image.url }}"></a>
+			<!-- <input class="text-input-mobile ml-2 mr-2" type="text" name="fname"> -->
+			<div class="media-body d-flex">
+				<div class="btn-group dropleft ml-auto">
+				<!--
+				  <button type="button" class="btn_posts ml-4 btn btn-success" style="border-radius:100px;">Announcement</button>
+				  <button type="button" class="btn_posts ml-4 btn btn-success" style="border-radius:100px;">Timesheet</button>
+				  <button type="button" class="btn_posts ml-4 btn btn-success" style="border-radius:100px;">Task</button>
+				  -->
+				  <button type="button" class="btn btn-success dropdown-toggle ml-4" 
+				  data-toggle="dropdown" 
+				  aria-haspopup="true" 
+				  aria-expanded="false">
+					Create Post
+				  </button>
+					<div class="dropdown-menu">
+						{% if user.groups.all.0.name == 'Administration' %}
+							<a class="dropdown-item" href="{% url 'post-create-announcement' %}">Announcement</a>
+							<a class="dropdown-item" href="{% url 'post-create-timesheet' %} ">Timesheet</a>
+							<a class="dropdown-item" href="{% url 'post-create-taskassignment' %} ">Task Assignment</a>
+						{% else %}
+							<a class="dropdown-item" href="{% url 'post-create-timesheet' %} ">Timesheet</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		<!-- Desktop -->
+		{% else %}
+			<!--<a href="{% url 'profile' %}"><img class="rounded-circle site-header-img ml-2" src="{{ user.profile.image.url }}"></a>-->
+			<!-- <input class="text-input ml-2" type="text" name="fname"> -->
+			<div class="media-body d-flex justify-content-center">
+				<div class="btn-group dropleft" style="align-items: center; justify-content: center; text-align:center;">
+				{% if user.groups.all.0.name == 'Administration' %}
+				  <button 
+				  type="button" 
+				  class="btn_posts ml-0 btn btn-success" 
+				  style="border-radius:10px;"
+				  onclick="window.location.href='{% url 'create-announcement' %}'">
+				  Create Announcement
+				  </button>
+				  
+				  <button 
+				  type="button" 
+				  class="btn_posts ml-4 btn btn-success" 
+				  style="border-radius:10px;"
+				  onclick="window.location.href='{% url 'create-timesheet' %}'">
+				  Create Timesheet
+				  </button>
+				  
+				  <button 
+				  type="button" 
+				  class="btn_posts ml-4 btn btn-success" 
+				  style="border-radius:10px;"
+				  onclick="window.location.href='{% url 'create-task' %}'">
+				  Create Task
+				  </button>
+				{% else %}
+				  <button 
+				  type="button" 
+				  class="btn_posts ml-4 btn btn-success" 
+				  style="border-radius:10px;"
+				  onclick="window.location.href='{% url 'create-timesheet' %}'">
+				  Create Timesheet
+				  </button>
+				{% endif %}
+				<!--
+				  <button type="button" class="btn btn-success dropdown-toggle ml-4" 
+				  data-toggle="dropdown" 
+				  aria-haspopup="true" 
+				  aria-expanded="false">
+					Create Post
+				  </button>
+				-->
+				</div>
+			</div>
+		{% endif %}
+		</article>
+		{% if request.user_agent.is_mobile %}
+			<div class="btn-group mb-3 btn-group-sm d-flex justify-content-center" role="group">
+			  <button type="button" class="btn btn-secondary mr-1" onclick="window.location.href='{% url 'filter-announcements' %}';">Announcements</button>
+			  <button type="button" class="btn btn-secondary mr-1" onclick="window.location.href='{% url 'filter-timesheets' %}';">Timesheets</button>
+			  <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'filter-tasks' %}';">Task Assignments</button>
+			</div>
+		{% endif %}
+	{% else %}
+		<article class="media content-section-side shadow_effect_light">
+		{% if request.user_agent.is_mobile %}
+			<div class="media-body">
+				<h6 style="text-align: center;">Please sign in in order to post! <a href="{% url 'login' %}">Log In</a></h6>
+			</div>
+		{% else %}
+			<div class="media-body">
+				<h6 style="text-align: center;">Please sign in in order to post! <a href="{% url 'login' %}">Log In</a></h6>
+			</div>
+			
+		{% endif %}
+		</article>
+	{% endif %}
+	<article class="content-section-side shadow_effect_only" style="height: 93%;"
+			onmouseover="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').addClass('show');"
+			onmouseout="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').removeClass('show');">
+		<div class="d-flex ml-1">
+			<h5 style="color:#3098ff;">{{ current_title }}</h5>
+		</div>
+		<div class="media-body">
+			{% for product in products %}
+				<article class="media content-section-sub d-flex mb-2"
+					onmouseover="$('.btn_posts').css('opacity','1.0'); style.cursor = 'pointer';"
+					onmouseout="$('.btn_posts').css('opacity','1.0'); "
+					onclick="window.location.href='{% url 'product-detail' product.id %}';">
+					<b>{{ product.title }}</b><div class="ml-auto" style="font-size: 12px;">Status: {{ product.status }}</div>
+				</article>
+			{% endfor %}
+		</div>
+		
+		<!-- Pagination -->
+		{% if is_paginated %}
+		<div class="paginator">
+			{% if page_obj.has_previous %}
+				<a class="btn btn-outline-primary mb-4 btn-round thumb_effect" href="?page=1" style="border-radius: 10%;">First</a>
+				<!--<a class="btn btn-outline-info mb-4 btn-round" href="?page={{ page_obj.previous_page_number }}" style="border-radius: 10%;"><</a>-->
+			{% endif %}
+			
+			{% for num in page_obj.paginator.page_range %}
+				{% if page_obj.number == num %}
+					<a class="btn btn-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+				{% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5'%}
+					<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+				{% endif %}
+			{% endfor %}
+			
+			{% if page_obj.has_next %}
+				<!--<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }} " style="border-radius: 10%;">></a>-->
+				<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ page_obj.paginator.num_pages }}" style="border-radius: 10%;">Last</a>
+			{% endif %}
+		</div>
+		{% endif %}
+	</article>
+{% endblock content %}

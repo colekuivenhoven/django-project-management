@@ -1,0 +1,184 @@
+{% extends "blog/base.html" %}
+{% block content %}
+	<article class="media content-section shadow_effect_only"
+			onmouseover="this.style.backgroundColor = 'rgba(250, 250, 250, 0.10)';"
+			onmouseout="this.style.backgroundColor = '';"
+	>
+	  <a href="{% url 'user-posts' post.author.username %}"><img class="rounded-circle article-img thumb_effect thumb_shadow" src="{{ post.author.profile.image.url }}"></a>
+	  <div class="media-body">
+		<div class="article-metadata d-flex">
+			<b><a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a></b>
+			{% if request.user_agent.is_mobile %}
+			
+			{% else %}
+				<div><small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small></div>
+			{% endif %}
+			<span class="ml-auto mt-1 mb-1"></span>
+			
+			<!-- Comments Button -->
+			<!--
+			<a href="{% url 'post-detail' post.id %}" style="text-decoration: none;">
+				<span class="badge badge-light badge-pill ml-2 mt-1 mb-1" style="background-color: #f7f7f7;"
+					onmouseover="this.style='background-color: #e8e8e8;'"
+					onmouseout="this.style='background-color: #f7f7f7;'">
+					0 comments &#x200B;
+				</span>
+			</a>
+			-->
+			{% if object.author == user %}
+				<a href="javascript:;" style="text-decoration: none;" 
+				onclick="window.location.href='{% url 'post-update' object.id %}';">
+					<span class="badge badge-light badge-pill ml-2 mt-1 mb-1 thumb_effect" style="background-color: #f7f7f7;"
+						onmouseover="this.style='background-color: #0080ff; color: white;'"
+						onmouseout="this.style='background-color: #f7f7f7;'">
+						&#x200B; Update &#x200B;
+					</span>
+				</a>
+				
+				<a href="javascript:;" style="text-decoration: none;" 
+				onclick="window.location.href='{% url 'post-delete' object.id %}';">
+					<span class="badge badge-light badge-pill ml-2 mt-1 mb-1 thumb_effect" style="background-color: #f7f7f7;"
+						onmouseover="this.style='background-color: #e0b492; color: white;'"
+						onmouseout="this.style='background-color: #f7f7f7;'">
+						&#x200B; Delete &#x200B;
+					</span>
+				</a>
+			{% endif %}
+			<!-- Current user has liked post -->
+			<!--
+			{% if user in post.likes.all %}
+				<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+				<form action="{% url 'dislike_post' post.pk %}" method="POST" id="form_post_{{ post.id }}" target="dummyframe">
+					{% csrf_token %}
+					<a href="javascript:;" style="text-decoration: none;" 
+					onclick="document.getElementById('form_post_{{ post.id }}').submit(); window.parent.location.reload(); event.stopPropagation();">
+					<input type="hidden" name="post_id" value={{ post.id }}>
+					<!-- Current user HAS liked post
+						<span class="badge badge-light badge-pill ml-2 mt-1 mb-1 thumb_effect" style="background-color: #b6d1c2; color: white;"
+							onmouseover="this.style='background-color: #e0b492; color: white;'"
+							onmouseout="this.style='background-color: #b6d1c2; color: white;'">
+							&#x200B; Unlike &#x200B;
+						</span>
+					</a>
+				</form>
+				
+			<!-- Current user has NOT liked post
+			{% else %}
+				<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+				<form action="{% url 'like_post' post.pk %}" method="POST" id="form_post_{{ post.id }}2" target="dummyframe">
+					{% csrf_token %}
+					<a href="javascript:;" style="text-decoration: none;" 
+					onclick="document.getElementById('form_post_{{ post.id }}2').submit(); window.parent.location.reload(); event.stopPropagation();">
+					<input type="hidden" name="post_id" value={{ post.id }}>
+					<span class="badge badge-light badge-pill ml-2 mt-1 mb-1 thumb_effect" style="background-color: #f7f7f7;"
+						onmouseover="this.style='background-color: #0080ff; color: white;'"
+						onmouseout="this.style='background-color: #f7f7f7;'">
+						&#x200B; Like &#x200B;
+					</span>
+				</a>
+			</form>
+			{% endif %}
+			-->
+			
+			<!-- Total Likes -->
+			<!--<span class="badge badge-dark badge-pill ml-2 mt-1 mb-1" style="background-color: #7bb593;">&#x200B; {{ post.total_likes }} likes &#x200B;</span>-->
+			
+		</div>
+		
+		{% if post.title == 'Timesheet' %}
+			<h5 class="article-title">{{ post.title }} Submission</h5>
+			<table class="article-content" border="0px" align=left>
+				<tr>
+					<td align='left' style="width:140px">Project Number: </td>
+					<td align='left'><b>{{ post.content_projectNum }}</br></td>
+				</tr>
+				<tr>
+					<td align='left'>Start Time: </td>
+					<td align='left'><b>{{ post.content_timeStart }}</b></td>
+				</tr>
+				<tr>
+					<td align='left'>End Time: </td>
+					<td align='left'><b>{{ post.content_timeEnd }}</b></td>
+				</tr>
+				<tr>
+					<td align='left'>Total Hours: </td>
+					<td align='left'><b>{{ post.get_total_hours }} Hour(s)</b></td>
+				</tr>
+			</table>
+			<br><br>
+		{% elif post.title == 'Task Assignment' %}
+			<h5 class="article-title">{{ post.title }}</h5>
+				<table class="article-content" border="0px" align=left>
+					<tr>
+						<td align='left' style="width:140px">User ID: </td>
+						<td align='left'><b>{{ post.content_userID}}</br></td>
+					</tr>
+					<tr>
+						<td align='left'>Project Number: </td>
+						<td align='left'><b>{{ post.content_projectNum }}</b></td>
+					</tr>
+				</table>
+				<br><br><br>
+				<h6 class="article-title">Content</h6>
+				<p class="article-content">{{ post.content|safe }}</p>
+		{% else %}
+			<h5 class="article-title">{{ post.title }}</h5>
+			<p class="article-content">{{ post.content|safe }}</p>
+		{% endif %}
+	</article>
+	<!--
+	{% if object.author == user %}
+		<div class="items-right">
+			<a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}" role="button">Update</a>
+			<a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}" role="button">Delete</a>
+		</div>
+	{% endif %}
+	-->
+
+	{% if user.is_authenticated %}
+		<!-- Comment Bar -->
+		<!--
+		<article class="media content-section-side">
+		{% if request.user_agent.is_mobile %}
+			<a href="{% url 'profile' %}"><img class="rounded-circle site-header-img" src="{{ user.profile.image.url }}"></a>
+			<input class="text-input-mobile ml-2 mr-2" type="text" name="fname">
+			<div class="media-body">
+				<div class="d-flex">
+					
+					<a class="btn btn-outline-secondary ml-auto" href="{% url 'post-create' %}">Comment</a>
+				</div>
+			</div>
+		{% else %}
+			<a href="{% url 'profile' %}"><img class="rounded-circle site-header-img ml-2" src="{{ user.profile.image.url }}"></a>
+			<input class="text-input ml-2" type="text" name="fname">
+			<div class="media-body">
+				<div class="items-right">
+					
+					<a class="btn btn-outline-secondary" href="{% url 'post-create' %}">Comment</a>
+				</div>
+			</div>
+		{% endif %}
+		</article>
+		-->
+	{% else %}
+		<article class="media content-section-side">
+		{% if request.user_agent.is_mobile %}
+			<div class="media-body">
+				<h6 style="text-align: center;">Please sign in in order to comment! <a href="{% url 'login' %}">Log In</a></h6>
+			</div>
+		{% else %}
+			<div class="media-body">
+				<h6 style="text-align: center;">Please sign in in order to comment! <a href="{% url 'login' %}">Log In</a></h6>
+			</div>
+		{% endif %}
+		</article>
+	{% endif %}
+	
+	<!-- Comments -->
+	<!--
+	<article class="media content-section-side">
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+	</article>
+	-->
+{% endblock content %}

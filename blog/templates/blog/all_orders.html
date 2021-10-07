@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<script>
+	$(document).ready(function(){
+	 $('#list-tab a[href="{% url 'all-customers' %}"]').tab('show')
+	});
+</script>
+	{% for customer in customers %}
+		<article class="media content-section shadow_effect_light"
+						onmouseover="this.style.backgroundColor = 'rgba(250, 250, 250, 0.10)'; style.cursor = 'pointer';"
+						onmouseout="this.style.backgroundColor = '';"
+						onclick="window.location.href='{% url 'customer-detail' customer.id %}';">
+		    <div class="media-body d-flex">
+			<h5 class="article-title">Customer: {{ customer.title }}</h5>
+			<div class="ml-auto"><small class="text-muted">{{ customer.date_posted|date:"F d, Y" }}</small></div>
+		</article>
+	{% endfor %}
+	{% if is_paginated %}
+		{% if page_obj.has_previous %}
+			<a class="btn btn-outline-secondary mb-4 btn-round" href="?page=1" style="border-radius: 10%;">First</a>
+			<!--<a class="btn btn-outline-info mb-4 btn-round" href="?page={{ page_obj.previous_page_number }}" style="border-radius: 10%;"><</a>-->
+		{% endif %}
+		
+		{% for num in page_obj.paginator.page_range %}
+			{% if page_obj.number == num %}
+				<a class="btn btn-secondary mb-4" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+			{% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5'%}
+				<a class="btn btn-outline-secondary mb-4" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+			{% endif %}
+		{% endfor %}
+		
+		{% if page_obj.has_next %}
+			<!--<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }} " style="border-radius: 10%;">></a>-->
+			<a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}" style="border-radius: 10%;">Last</a>
+		{% endif %}
+		
+	{% endif %}
+{% endblock content %}

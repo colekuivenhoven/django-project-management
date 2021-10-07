@@ -1,0 +1,111 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<a class="ml-2" href="javascript:;" style="text-decoration: none;">
+<input type="hidden">
+	<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #67ace6; color: white;"
+		onmouseover="this.style='background-color: #4d718f; color: white;'"
+		onmouseout="this.style='background-color: #67ace6; color: white;'"
+		onclick="window.history.back();return false;">
+		&#x200B; << Back &#x200B;
+	</span>
+</a>
+	<article class="media content-section shadow_effect_only">
+	    <div class="media-body">
+			<div class="article-metadata d-flex">
+				<h5 class="article-title">Employee ID: {{ object.id }}</h5>
+			<div class="ml-auto"><small class="text-muted"></small></div>
+		</div>
+		<br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left' width=160px><b>First Name</b></td>
+				<td align='left'><b>Last Name</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.firstName }}</td>
+				<td>{{ object.lastName }}</td>
+			</tr>
+		</table>
+		<br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left' width=160px><b>Start Date</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.start_date|date }}</td>
+			</tr>
+		</table>
+		<table border="0px" align=left class="mb-3">
+			<tr>
+				<td align='left' width=180px><b>Email Address</b></td>
+				<td align='left'><b>Phone Number</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.email }}</td>
+				<td>{{ object.phone_formatted }}</td>
+			</tr>
+		</table>
+		<br><br><br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left' width=160px><b>Address Line 1</b></td>
+				<td align='left'><b>Address Line 2</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.addressLine1 }}</td>
+				<td>{{ object.addressLine2 }}</td>
+			</tr>
+		</table>
+		<br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left' width=160px><b>City</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.city }}</td>
+			</tr>
+		</table>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left' width=160px><b>State</b></td>
+				<td align='left' width=160px><b>Country</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.state_value_display }}</td>
+				<td>{{ object.country_value_display }}</td>
+			</tr>
+		</table>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left'><b>Zip Code</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.zipcode }}</td>
+			</tr>
+		</table>
+		<br><br><br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left' width=160px><b>Job Title</b></td>
+				<td align='left' width=160px><b>Department</b></td>
+				<td align='left' width=120px><b>Pay Rate</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.job_title }}</td>
+				<td>{{ object.department }}</td>
+				<td>{{ object.pay_rate }}</td>
+			</tr>
+		</table>
+		<br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left' width=160px><b>Employee Type</b></td>
+				<td align='left'><b>Status</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.type }}</td>
+				<td>{{ object.status }}</td>
+			</tr>
+		</table>
+	</article>
+{% endblock content %}

@@ -1,0 +1,111 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<script>
+	$(document).ready(function(){
+	 $('#list-tab a[href="{% url 'all-timesheets-sql' %}"]').tab('show')
+	});
+</script>
+		<div class="d-flex">
+			<a class="ml-2 mb-2" href="javascript:;" style="text-decoration: none;">
+				<input type="hidden">
+				<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #67ace6; color: white;"
+					onmouseover="this.style='background-color: #4d718f; color: white;'"
+					onmouseout="this.style='background-color: #67ace6; color: white;'"
+					onclick="window.history.back();return false;">
+					&#x200B; << Back &#x200B;
+				</span>
+			</a>
+			<a class="ml-auto mb-2" href="javascript:;" style="text-decoration: none;">
+				<input type="hidden">
+				<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #adadad; color: white;"
+					onmouseover="this.style='background-color: #e6c667; color: white;'"
+					onmouseout="this.style='background-color: #adadad; color: white;'"
+					onclick="location.reload();">
+					&#x200B; &#x21BB; Refresh &#x200B;
+				</span>
+			</a>
+			<a class="ml-2 mb-2 mr-2" href="javascript:;" style="text-decoration: none;">
+				<input type="hidden">
+				<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #75c990; color: white;"
+					onmouseover="this.style='background-color: #4e8560; color: white;'"
+					onmouseout="this.style='background-color: #75c990; color: white;'"
+					onclick="window.location.href='{% url 'create-timesheet' %}';">
+					&#x200B; + Create Entry &#x200B;
+				</span>
+			</a>
+		</div>
+	<article class="content-section-side shadow_effect_only" style="height: 100%;"
+			onmouseover="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').addClass('show');"
+			onmouseout="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').removeClass('show');">
+		<div class="d-flex ml-1">
+			<h5 style="color:#3098ff;">{{ current_title }} - Page {{objects.number}}</h5>
+		</div>
+		<div class="media-body">
+		{% if request.user_agent.is_mobile %}
+			{% for object in objects %}
+				<article class="media content-section-sub d-flex mb-2"
+					onmouseover="$('.btn_posts').css('opacity','1.0'); style.cursor = 'pointer';"
+					onmouseout="$('.btn_posts').css('opacity','1.0'); "
+					onclick="window.location.href='{% url 'timesheet-detail-sql' object.0 %}';">
+					<div class="mr-auto"><b>ID: {{ object.EntryID }}</b> &#x200B; &#x200B; &#x200B;{{ object.FullName }}</div><div class="ml-2" align=right style="font-size: 12px;">Status: <b>{{ object.Status }}</b></div>
+				</article>
+			{% endfor %}
+		{% else %}
+			{% for object in objects %}
+				<article class="media content-section-sub d-flex mb-2"
+					onmouseover="$('.btn_posts').css('opacity','1.0'); style.cursor = 'pointer';"
+					onmouseout="$('.btn_posts').css('opacity','1.0'); "
+					onclick="window.location.href='{% url 'timesheet-detail-sql' object.0 %}';">
+					<b>ID: {{ object.EntryID }}</b> &#x200B; &#x200B; &#x200B;{{ object.FullName }}<div class="ml-auto" style="font-size: 12px;">Status: <b>{{ object.Status }}</b></div>
+				</article>
+			{% endfor %}
+		{% endif %}
+		</div>
+		
+		{% if request.user_agent.is_mobile %}
+			<!-- Pagination -->
+			{% if objects.has_other_pages %}
+			<div class="paginator_mobile">
+				{% if objects.has_previous %}
+					<a class="btn btn-outline-primary mb-4 btn-round thumb_effect" href="?page=1" style="border-radius: 10%;">First</a>
+				{% endif %}
+				
+				{% for num in objects.paginator.page_range %}
+					{% if objects.number == num %}
+						<a class="btn btn-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+					{% elif num > objects.number|add:'-3' and num < objects.number|add:'3'%}
+						<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+					{% endif %}
+				{% endfor %}
+				
+				{% if objects.has_next %}
+					<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ objects.paginator.num_pages }}" style="border-radius: 10%;">Last</a>
+				{% endif %}
+			</div>
+			{% endif %}
+			<!-- End Pagination -->
+		{% else %}
+			<!-- Pagination -->
+			{% if objects.has_other_pages %}
+			<div class="paginator">
+				{% if objects.has_previous %}
+					<a class="btn btn-outline-primary mb-4 btn-round thumb_effect" href="?page=1" style="border-radius: 10%;">First</a>
+				{% endif %}
+				
+				{% for num in objects.paginator.page_range %}
+					{% if objects.number == num %}
+						<a class="btn btn-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+					{% elif num > objects.number|add:'-5' and num < objects.number|add:'5'%}
+						<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+					{% endif %}
+				{% endfor %}
+				
+				{% if objects.has_next %}
+					<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ objects.paginator.num_pages }}" style="border-radius: 10%;">Last</a>
+				{% endif %}
+			</div>
+			{% endif %}
+			<!-- End Pagination -->
+		{% endif %}
+	</article>
+{% endblock content %}

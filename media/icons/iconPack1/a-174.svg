@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
+	.st1{fill:none;}
+	.st2{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:7;}
+	.st3{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;}
+	.st4{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st5{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-miterlimit:10;}
+	.st6{fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:10;stroke-dasharray:5.3638,5.3638;}
+</style>
+<g>
+	<g>
+		<path class="st0" d="M81.7,75.5H18.3c-1.9,0-3.4-1.5-3.4-3.4V27.9c0-1.9,1.5-3.4,3.4-3.4h63.4c1.9,0,3.4,1.5,3.4,3.4v44.2
+			C85.2,74,83.6,75.5,81.7,75.5z"/>
+		<g>
+			<line class="st0" x1="14.8" y1="34.1" x2="85.2" y2="34.1"/>
+			<line class="st0" x1="14.8" y1="65.9" x2="85.2" y2="65.9"/>
+		</g>
+		<g>
+			<line class="st0" x1="24.7" y1="75.5" x2="24.7" y2="65.9"/>
+			<line class="st0" x1="24.7" y1="34.1" x2="24.7" y2="24.5"/>
+			<g>
+				<line class="st0" x1="34.8" y1="75.5" x2="34.8" y2="65.9"/>
+				<line class="st0" x1="34.8" y1="34.1" x2="34.8" y2="24.5"/>
+			</g>
+			<g>
+				<line class="st0" x1="44.9" y1="75.5" x2="44.9" y2="65.9"/>
+				<line class="st0" x1="44.9" y1="34.1" x2="44.9" y2="24.5"/>
+			</g>
+			<g>
+				<line class="st0" x1="55" y1="75.5" x2="55" y2="65.9"/>
+				<line class="st0" x1="55" y1="34.1" x2="55" y2="24.5"/>
+			</g>
+			<g>
+				<line class="st0" x1="65.2" y1="75.5" x2="65.2" y2="65.9"/>
+				<line class="st0" x1="65.2" y1="34.1" x2="65.2" y2="24.5"/>
+			</g>
+			<g>
+				<line class="st0" x1="75.3" y1="75.5" x2="75.3" y2="65.9"/>
+				<line class="st0" x1="75.3" y1="34.1" x2="75.3" y2="24.5"/>
+			</g>
+		</g>
+	</g>
+	<g>
+		<polygon class="st0" points="54,50 47.5,46.2 47.5,53.8 		"/>
+		<circle class="st0" cx="50" cy="50" r="9"/>
+	</g>
+</g>
+</svg>

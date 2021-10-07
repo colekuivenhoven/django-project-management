@@ -1,0 +1,34 @@
+{% extends "blog/base_employee.html" %}
+{% block content %}
+<div class="d-flex">
+	<a class="ml-2" href="javascript:;" style="text-decoration: none;">
+	<input type="hidden">
+		<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #67ace6; color: white;"
+			onmouseover="this.style='background-color: #4d718f; color: white;'"
+			onmouseout="this.style='background-color: #67ace6; color: white;'"
+			onclick="window.history.back();return false;">
+			&#x200B; << Back &#x200B;
+		</span>
+	</a>
+	<a class="ml-auto mb-2 mr-2" href="javascript:;" style="text-decoration: none;">
+		<input type="hidden">
+		<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #adadad; color: white;"
+			onmouseover="this.style='background-color: #e6c667; color: white;'"
+			onmouseout="this.style='background-color: #adadad; color: white;'"
+			onclick="location.reload();">
+			&#x200B; &#x21BB; Refresh &#x200B;
+		</span>
+	</a>
+</div>
+	<article class="media content-section shadow_effect_only">
+	    <div class="media-body">
+			<div class="article-metadata d-flex">
+				<h5 class="article-title">{{ object.Announcement_Name }}</h5>
+			<div class="ml-auto"><small class="text-muted"><b>{{ object.date_posted|date:"F d, Y" }}</b></small></div>
+		</div>
+		
+		<p class="article-content">{{ object.AnnouncementContent }}</p>
+		<p class="article-content"><b>Status: </b>{{ object.Status }}</p>
+		<p class="article-content"><b>Priority: </b>{{ object.Priority }}</p>
+	</article>
+{% endblock content %}

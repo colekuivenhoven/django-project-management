@@ -1,0 +1,68 @@
+{% extends "blog/base_employee.html" %}
+{% block content %}
+<div class="d-flex">
+			<a class="ml-2 mb-2" href="javascript:;" style="text-decoration: none;">
+				<input type="hidden">
+				<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #67ace6; color: white;"
+					onmouseover="this.style='background-color: #4d718f; color: white;'"
+					onmouseout="this.style='background-color: #67ace6; color: white;'"
+					onclick="window.history.back();return false;">
+					&#x200B; << Back &#x200B;
+				</span>
+			</a>
+			<a class="ml-auto mb-2 mr-2" href="javascript:;" style="text-decoration: none;">
+				<input type="hidden">
+				<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #adadad; color: white;"
+					onmouseover="this.style='background-color: #e6c667; color: white;'"
+					onmouseout="this.style='background-color: #adadad; color: white;'"
+					onclick="location.reload();">
+					&#x200B; &#x21BB; Refresh &#x200B;
+				</span>
+			</a>
+		</div>
+	<article class="media content-section shadow_effect_only">
+	    <div class="media-body">
+			<div class="article-metadata d-flex">
+				<h5 class="article-title">Timesheet Entry #{{ object.TimesheetEntry_Line_ID }}</h5>
+			<div class="ml-auto"><small class="text-muted"><b>{{ object.date_posted|date:"F d, Y" }}</b></small></div>
+		</div>
+		
+		<table class="article-content" border="0px" align=left>
+			<tr>
+				<td align='left' style="width:140px"><b>Employee ID: </br></td>
+				<td align='left'>{{ info.EmployeeID }}</td>
+			</tr>
+			<tr>
+				<td align='left' style="width:140px"><b>Employee Name: </br></td>
+				<td align='left'>{{ info.FullName }}</td>
+			</tr>
+			<tr>
+				<td align='left' style="width:140px"><b>Job ID: </br></td>
+				<td align='left'>{{ info.JobID }}</td>
+			</tr>
+			<tr><td>&#x200B;</td></tr>
+			<tr>
+				<td align='left' style="width:140px"><b>Clock-In Time: </br></td>
+				<td align='left'>{{ object.ClockInTime }}</td>
+			</tr>
+			<tr>
+				<td align='left'><b>Clock-Out Time: </br></td>
+				<td align='left'>{{ object.ClockOutTime }}</td>
+			</tr>
+			<tr>
+				<td align='left'><b>Total Hours: </br></td>
+				<td align='left'>{{ object.TotalHours|stringformat:'0.2f' }} Hour(s)</td>
+			</tr>
+			<tr><td>&#x200B;</td></tr>
+			<tr>
+				<td align='left'><b>Timesheet Date: </br></td>
+				<td align='left'>{{ info.TimesheetDate }}</td>
+			</tr>
+			<tr><td>&#x200B;</td></tr>
+			<tr>
+				<td align='left'><b>Status: </br></td>
+				<td align='left'>{{ info.Status }}</td>
+			</tr>
+		</table>
+	</article>
+{% endblock content %}

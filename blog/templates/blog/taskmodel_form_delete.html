@@ -1,0 +1,69 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block content %}
+
+<script>
+	$(document).ready(function(){
+	 $('#list-tab a[href="{% url 'create-job' %}"]').tab('show')
+	});
+</script>
+<a class="ml-2" href="javascript:;" style="text-decoration: none;">
+<input type="hidden">
+	<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #67ace6; color: white;"
+		onmouseover="this.style='background-color: #4d718f; color: white;'"
+		onmouseout="this.style='background-color: #67ace6; color: white;'"
+		onclick="window.history.back();return false;">
+		&#x200B; << Back &#x200B;
+	</span>
+</a>
+<div class="content-section-side shadow_effect_only">
+	<form method="POST">
+		{% csrf_token %}
+		<fieldset class="form-group">
+			<!-- {{ form.title|as_crispy_field }} -->
+			<legend class="border-bottom mb-4" style="text-align: center;">{{ entry_title }}</legend>
+		</fieldset>
+		<div class="form-group d-flex justify-content-center">
+			<a class="btn btn-outline-secondary" onclick="window.history.back();return false;">Cancel</a>
+			<button class="btn btn-outline-danger ml-2" type="submit">Delete</button>
+		</div>
+		<div style="display: none;">
+			<table>
+				<tr>
+					<td width='172px'>Job ID*</td>
+					<td width='150px'>Employee ID*</td>
+				</tr>
+				<tr>
+					<td>{{ form.job_id }}</td>
+					<td>{{ form.employee_id }}</td>
+				</tr>
+			</table>
+			<br>
+			<table>
+				<tr>
+					<td>Start Date</td>
+					<td>Due Date</td>
+				</tr>
+				<tr>
+					<td>{{ form.startDate }}</td>
+					<td>{{ form.dueDate }}</td>
+				</tr>
+			</table>
+			<br>
+			{{ form.content|as_crispy_field }}
+			<table align=left>
+				<tr>
+					<td>Status</td>
+					<td>Priority</td>
+				</tr>
+				<tr>
+					<td width='150px'>{{ form.status }}</td>
+					<td width='150px'>{{ form.priority }}</td>
+					
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>
+{% endblock content %}

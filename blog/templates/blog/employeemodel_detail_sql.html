@@ -1,0 +1,126 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="d-flex">
+	<a class="ml-2" href="javascript:;" style="text-decoration: none;">
+	<input type="hidden">
+		<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #67ace6; color: white;"
+			onmouseover="this.style='background-color: #4d718f; color: white;'"
+			onmouseout="this.style='background-color: #67ace6; color: white;'"
+			onclick="window.history.back();return false;">
+			&#x200B; << Back &#x200B;
+		</span>
+	</a>
+	<a class="ml-auto mb-2" href="javascript:;" style="text-decoration: none;">
+		<input type="hidden">
+		<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #adadad; color: white;"
+			onmouseover="this.style='background-color: #e6c667; color: white;'"
+			onmouseout="this.style='background-color: #adadad; color: white;'"
+			onclick="location.reload();">
+			&#x200B; &#x21BB; Refresh &#x200B;
+		</span>
+	</a>
+	<a class="ml-2 mb-2" href="javascript:;" style="text-decoration: none;">
+		<input type="hidden">
+		<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #75c990; color: white;"
+			onmouseover="this.style='background-color: #4e8560; color: white;'"
+			onmouseout="this.style='background-color: #75c990; color: white;'"
+			onclick="window.location.href='{% url 'update-employee' object.0 %}'">
+			&#x200B; Update &#x200B;
+		</span>
+	</a>
+	<a class="ml-2 mb-2 mr-2" href="javascript:;" style="text-decoration: none;">
+		<input type="hidden">
+		<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #fc6203; color: white;"
+			onmouseover="this.style='background-color: #8c4418; color: white;'"
+			onmouseout="this.style='background-color: #fc6203; color: white;'"
+			onclick="window.location.href='{% url 'delete-employee' object.0 %}';">
+			&#x200B; Delete &#x200B;
+		</span>
+	</a>
+</div>
+	<article class="media content-section shadow_effect_only">
+	    <div class="media-body">
+			<div class="article-metadata d-flex">
+				<h5 class="article-title">Employee ID: {{ object.Employee_ID }}</h5>
+			<div class="ml-auto"><small class="text-muted"></small></div>
+		</div>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td class="ml-2" align='left'><b>First Name</b></td>
+				<td align='left' style="padding-left: 15px;"><b>Last Name</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.Emp_FirstName }}</td>
+				<td style="padding-left: 15px;">{{ object.Emp_LastName }}</td>
+			</tr>
+		</table>
+		<br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left'><b>Email Address</b></td>
+				<td align='left' style="padding-left: 15px;"><b>Phone Number</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.Emp_Email }}</td>
+				<td style="padding-left: 15px;">{{ object.Emp_Phone }}</td>
+			</tr>
+		</table>
+		<br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td class="ml-2" align='left' width=180px><b>Job Title</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.JobTitle }}</td>
+			</tr>
+		</table>
+		<br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left'><b>Department</b></td>
+				<td align='left' style="padding-left: 15px;"><b>Payrate</b></td>
+				<td align='left' style="padding-left: 15px;"><b>Type</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.DepartmentName }}</td>
+				<td style="padding-left: 15px;">${{ object.PayRate|stringformat:'0.2f' }}/hr</td>
+				<td style="padding-left: 15px;">{{ object.Type }}</td>
+			</tr>
+		</table>
+		<br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td class="ml-2" align='left' width=180px><b>Address 1</b></td>
+				<td align='left' style="padding-left: 15px;"><b>Address 2</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.Emp_Address_Address1 }}</td>
+				<td style="padding-left: 15px;">{{ object.Emp_Address_Address2 }}</td>
+			</tr>
+		</table>
+		<br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td align='left'><b>City</b></td>
+				<td align='left' style="padding-left: 15px;"><b>State</b></td>
+				<td align='left' style="padding-left: 15px;"><b>Country</b></td>
+				<td align='left' style="padding-left: 15px;"><b>Zipcode</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.Emp_Location_City }}</td>
+				<td style="padding-left: 15px;">{{ object.StateName }}</td>
+				<td style="padding-left: 15px;">{{ object.CountryName }}</td>
+				<td style="padding-left: 15px;">{{ object.Emp_ZipCode }}</td>
+			</tr>
+		</table>
+		<br><br><br>
+		<table border="0px" align=left class="mb-2">
+			<tr>
+				<td class="ml-2" align='left' width=180px><b>Status</b></td>
+			</tr>
+			<tr>
+				<td>{{ object.Status }}</td>
+			</tr>
+		</table>
+	</article>
+{% endblock content %}

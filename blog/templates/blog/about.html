@@ -1,0 +1,31 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<script>
+	$(document).ready(function(){
+	 $('#list-tab a[href="{% url 'connect-sql' %}"]').tab('show')
+	});
+</script>
+
+	{% for user in sql_users %}
+		<article class="media content-section shadow_effect_light">
+		  <div class="media-body">
+			<b><p>{{ user.username }}</p></b>
+			<p>Email: {{ user.email }}</p>
+			<p>Date Joined: {{ user.date_joined }}</p>
+			<p>Last Login: {{ user.last_login }}</p>
+		  </div>
+		</article>
+	{% endfor %}
+	<!--
+	{% for post in sql_posts %}
+		<article class="media content-section">
+		  <div class="media-body">
+			<b><p>{{ post.title }}</p></b>
+			<p>Date Posted: {{ post.date_posted }}</p>
+			<p>Content: {{ post.content }}</p>
+		  </div>
+		</article>
+	
+	{% endfor %}
+	-->
+{% endblock content %}

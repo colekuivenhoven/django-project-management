@@ -1,0 +1,44 @@
+{% extends "blog/base.html" %}
+{% block content %}
+	<h5 class="mb-2" style="text-align: right;">User: {{ view.kwargs.username }} ({{ page_obj.paginator.count }} Entries)</h5>
+	<article class="content-section-side shadow_effect_only" style="height: 93%;"
+			onmouseover="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').addClass('show');"
+			onmouseout="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').removeClass('show');">
+		<div class="d-flex ml-1">
+			<h5>{{ current_title }}</h5>
+		</div>
+		<div class="media-body">
+			{% for post in posts %}
+				<article class="media content-section-sub d-flex mb-2"
+					onmouseover="$('.btn_posts').css('opacity','1.0'); style.cursor = 'pointer';"
+					onmouseout="$('.btn_posts').css('opacity','1.0'); "
+					onclick="window.location.href='{% url 'post-detail' post.id %}';">
+					<b>{{post.title}}</b> &#x200B; &#x200B; &#x200B;{{post.author}} <div class="ml-auto" style="font-size: 12px;">Date Created: {{ post.date_posted|date }}</div>
+				</article>
+			{% endfor %}
+		</div>
+		
+		<!-- Pagination -->
+		{% if is_paginated %}
+		<div class="paginator">
+			{% if page_obj.has_previous %}
+				<a class="btn btn-outline-primary mb-4 btn-round thumb_effect" href="?page=1" style="border-radius: 10%;">First</a>
+				<!--<a class="btn btn-outline-info mb-4 btn-round" href="?page={{ page_obj.previous_page_number }}" style="border-radius: 10%;"><</a>-->
+			{% endif %}
+			
+			{% for num in page_obj.paginator.page_range %}
+				{% if page_obj.number == num %}
+					<a class="btn btn-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+				{% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5'%}
+					<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+				{% endif %}
+			{% endfor %}
+			
+			{% if page_obj.has_next %}
+				<!--<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }} " style="border-radius: 10%;">></a>-->
+				<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ page_obj.paginator.num_pages }}" style="border-radius: 10%;">Last</a>
+			{% endif %}
+		</div>
+		{% endif %}
+	</article>
+{% endblock content %}

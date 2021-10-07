@@ -1,0 +1,407 @@
+{% extends "blog/base_employee.html" %}
+{% block content %}
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			if (window.location.href.indexOf("filter/latest") > -1)
+				$('#list-tab a[href="{% url 'filter-latest' %}"]').tab('show')
+			else if (window.location.href.indexOf("filter/announcements") > -1)
+				$('#list-tab a[href="{% url 'filter-announcements' %}"]').tab('show')
+			else if (window.location.href.indexOf("filter/timesheets") > -1)
+				$('#list-tab a[href="{% url 'filter-timesheets' %}"]').tab('show')
+			else if (window.location.href.indexOf("filter/taskassignments") > -1)
+				$('#list-tab a[href="{% url 'filter-tasks' %}"]').tab('show')
+			else if (window.location.href.indexOf("filter/all-latest") > -1)
+				$('#list-tab a[href="{% url 'filter-latest-all' %}"]').tab('show')
+			else if (window.location.href.indexOf("filter/all-timesheets") > -1)
+				$('#list-tab a[href="{% url 'filter-timesheets-all' %}"]').tab('show')
+			else if (window.location.href.indexOf("filter/all-taskassignments") > -1)
+				$('#list-tab a[href="{% url 'filter-tasks-all' %}"]').tab('show')
+			else
+				$('#list-tab a[href="{% url 'blog-home' %}"]').tab('show')
+		});
+	</script>
+	
+	<div class="d-flex">
+		<form method="POST" id="myform">
+		  {% csrf_token %}
+		  <label><b>Employee: </b></label>
+		  <select id="box1" onChange="this.form.submit();" style="margin-left: 5px; margin-bottom: 15px; width: 200px; height: 25px;"
+		  name="global_id">
+			<option selected disabled hidden>ID: {{ test }}</option>
+			{% for emp in emps %}
+				<option value="{{emp.0}}">ID: {{emp.0}} &#x200B; {{ emp.1 }} {{ emp.2 }}</option>
+			{% endfor %}
+		  </select>
+		</form>
+		<a class="ml-2 mb-2" href="javascript:;" style="text-decoration: none;">
+			<input type="hidden">
+			<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 mr-2 thumb_effect"  id="refresh"
+				style="background-color: #7fdb89; color: white;"
+				onmouseover="this.style='background-color: #e6c667; color: white;'"
+				onmouseout="this.style='background-color: #7fdb89; color: white;'"
+				onclick="document.getElementById('myform').submit();">
+				&#x200B; Submit &#x200B;
+			</span>
+		</a>
+	</div>
+	
+	<article class="media content-section-side shadow_effect_only"
+		onmouseover="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').addClass('show');"
+		onmouseout="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').removeClass('show');"
+		style="margin-bottom: 15px;">
+	<!-- Mobile -->
+	{% if request.user_agent.is_mobile %}
+		<div class="media-body d-flex justify-content-center">
+			<div class="btn-group dropleft" style="align-items: center; justify-content: center; text-align:center;">
+			  
+			  <button 
+			  type="button" 
+			  class="btn_posts ml-4 btn btn-success" 
+			  style="border-radius:10px;"
+			  onclick="window.location.href='{% url 'create-timesheet-employee' %}'">
+			  Create Timesheet
+			  </button>
+			  
+			</div>
+		</div>
+	<!-- Desktop -->
+	{% else %}
+		<!--<a href="{% url 'profile' %}"><img class="rounded-circle site-header-img ml-2" src="{{ user.profile.image.url }}"></a>-->
+		<!-- <input class="text-input ml-2" type="text" name="fname"> -->
+		<div class="media-body d-flex justify-content-center">
+			<div class="btn-group dropleft" style="align-items: center; justify-content: center; text-align:center;">
+			  
+			  <button 
+			  type="button" 
+			  class="btn_posts ml-4 btn btn-success" 
+			  style="border-radius:10px;"
+			  onclick="window.location.href='{% url 'create-timesheet-employee' %}'">
+			  Create Timesheet
+			  </button>
+			  
+			</div>
+		</div>
+	{% endif %}
+	</article>
+	<article class="content-section-side shadow_effect_only" style="height: 93%;"
+			onmouseover="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').addClass('show');"
+			onmouseout="$('.btn_posts').css('opacity','1.0'); $('.btn_posts').removeClass('show');">
+		<div class="d-flex ml-1">
+			<h5 style="color:#3098ff;">{{ current_title }} <h5 style="color: #1f5e9c;"> &#x200B; {{ employee.Emp_FirstName }} {{ employee.Emp_LastName }}</h5></h5>
+		</div>
+		<div class="media-body">
+			<!--
+			{% for post in posts %}
+				<article class="media content-section-sub d-flex mb-2"
+					onmouseover="$('.btn_posts').css('opacity','1.0'); style.cursor = 'pointer';"
+					onmouseout="$('.btn_posts').css('opacity','1.0'); "
+					onclick="window.location.href='{% url 'post-detail' post.id %}';">
+					<b>{{post.title}}</b> &#x200B; &#x200B; &#x200B;{{post.author}} <div class="ml-auto" style="font-size: 12px;">Date Created: {{ post.date_posted|date }}</div>
+				</article>
+			{% endfor %}
+			-->
+			{% for entry in entries %}
+				<article class="media content-section-sub d-flex mb-2"
+					onmouseover="$('.btn_posts').css('opacity','1.0'); style.cursor = 'pointer';"
+					onmouseout="$('.btn_posts').css('opacity','1.0'); "
+					onclick="window.location.href='{% url 'timesheet-detail-sql-employee' entry.EntryID %}';">
+					<b>ID: {{ entry.EntryID }}</b> &#x200B; Date: {{ entry.Date }}<div class="ml-auto" style="font-size: 12px;">Status: <b>{{ entry.Status }}</b></div>
+				</article>
+				<!--{{entry}}-->
+			{% endfor %}
+		</div>
+		
+		{% if request.user_agent.is_mobile %}
+			<!-- Pagination -->
+			{% if entries.has_other_pages %}
+			<div class="paginator_mobile">
+				{% if entries.has_previous %}
+					<a class="btn btn-outline-primary mb-4 btn-round thumb_effect" href="?page=1" style="border-radius: 10%;">First</a>
+				{% endif %}
+				
+				{% for num in entries.paginator.page_range %}
+					{% if entries.number == num %}
+						<a class="btn btn-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+					{% elif num > entries.number|add:'-3' and num < entries.number|add:'3'%}
+						<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+					{% endif %}
+				{% endfor %}
+				
+				{% if entries.has_next %}
+					<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ entries.paginator.num_pages }}" style="border-radius: 10%;">Last</a>
+				{% endif %}
+			</div>
+			{% endif %}
+			<!-- End Pagination -->
+		{% else %}
+			<!-- Pagination -->
+			{% if entries.has_other_pages %}
+			<div class="paginator">
+				{% if entries.has_previous %}
+					<a class="btn btn-outline-primary mb-4 btn-round thumb_effect" href="?page=1" style="border-radius: 10%;">First</a>
+				{% endif %}
+				
+				{% for num in entries.paginator.page_range %}
+					{% if entries.number == num %}
+						<a class="btn btn-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+					{% elif num > entries.number|add:'-5' and num < entries.number|add:'5'%}
+						<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ num }}" style="border-radius: 10%;">{{ num }}</a>
+					{% endif %}
+				{% endfor %}
+				
+				{% if entries.has_next %}
+					<a class="btn btn-outline-primary mb-4 thumb_effect" href="?page={{ entries.paginator.num_pages }}" style="border-radius: 10%;">Last</a>
+				{% endif %}
+			</div>
+			{% endif %}
+			<!-- End Pagination -->
+		{% endif %}
+	</article>
+	
+	
+	<!-- All posts main loop -->
+	{% for post in posts %}
+	
+		<!-- Mobile -->	
+		<!--
+		{% if request.user_agent.is_mobile %}
+			{% if post.title == 'Announcement' %}
+				<article class="media content-section shadow_effect_light" style="border: 3px solid rgba(255, 230, 230, 0.90)"
+						onmouseover="this.style.backgroundColor = 'rgba(250, 250, 250, 0.10)'; style.cursor = 'pointer';"
+						onmouseout="this.style.backgroundColor = '';"
+						onclick="window.location.href='{% url 'post-detail' post.id %}';">
+			{% else %}
+				<article class="media content-section shadow_effect_light"
+						onmouseover="this.style.backgroundColor = 'rgba(250, 250, 250, 0.10)'; style.cursor = 'pointer';"
+						onmouseout="this.style.backgroundColor = '';"
+						onclick="window.location.href='{% url 'post-detail' post.id %}';">
+			{% endif %}
+			  <a href="{% url 'user-posts' post.author.username %}"><img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}"></a>
+			  <div class="media-body">
+				<div class="article-metadata">
+					<b><a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a></b>
+					<div><small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small></div>
+				</div>
+				
+			    {% if post.title == 'Timesheet' %}
+					<h5 class="article-title"><u>{{ post.title }} Submission</u></h5>
+					<table class="article-content" border="0px" align=left>
+						<tr>
+							<td align='left' style="width:140px">Project Number: </td>
+							<td align='left'><b>{{ post.content_projectNum }}</br></td>
+						</tr>
+						<tr>
+							<td align='left'>Start Time: </td>
+							<td align='left'><b>{{ post.content_timeStart }}</b></td>
+						</tr>
+						<tr>
+							<td align='left'>End Time: </td>
+							<td align='left'><b>{{ post.content_timeEnd }}</b></td>
+						</tr>
+						<tr>
+							<td align='left'>Total Hours: </td>
+							<td align='left'><b>{{ post.get_total_hours }} Hour(s)</b></td>
+						</tr>
+					</table>
+					<br><br>
+				{% elif post.title == 'Task Assignment' %}
+					<h5 class="article-title"><u>{{ post.title }}</u></h5>
+						<table class="article-content" border="0px" align=left>
+							<tr>
+								<td align='left' style="width:140px">User ID: </td>
+								<td align='left'><b>{{ post.content_userID}}</br></td>
+							</tr>
+							<tr>
+								<td align='left'>Project Number: </td>
+								<td align='left'><b>{{ post.content_projectNum }}</b></td>
+							</tr>
+						</table>
+						<br><br><br>
+						<h6 class="article-title">Content</h6>
+						<p class="article-content">{{ post.content|safe }}</p>
+				{% else %}
+					<h5 class="article-title">{{ post.title }}</h5>
+					<p class="article-content">{{ post.content|safe }}</p>
+				{% endif %}
+			</article>
+			<p></p>
+			<!-- Buttons
+			<div class="d-flex" style="margin-bottom: 20px;">
+				<!-- Comments
+				<!--
+				<span class="ml-auto mt-1 mb-1"></span>
+				<a href="{% url 'post-detail' post.id %}" style="text-decoration: none;">
+					<span class="badge badge-light badge-pill ml-1 mt-1 mb-1" style="background-color: #e6e6e6;"
+						onmouseover="this.style='background-color: #c4c4c4;'"
+						onmouseout="this.style='background-color: #e6e6e6;'">
+						0 comments &#x200B;
+					</span>
+				</a>
+				-->
+				<!--
+				<span class="ml-auto mt-1 mb-1"></span>
+				<!-- Current user has liked post
+				{% if user in post.likes.all %}
+					<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+					<form action="{% url 'dislike_post' post.pk %}" method="POST" id="form_post_{{ post.id }}" target="dummyframe">
+						{% csrf_token %}
+						<a href="javascript:;" style="text-decoration: none;" 
+						onclick="document.getElementById('form_post_{{ post.id }}').submit(); window.parent.location.reload(); event.stopPropagation();">
+						<input type="hidden" name="post_id" value={{ post.id }}>
+						<!-- Current user HAS liked post
+							<span class="badge badge-light badge-pill ml-2 mt-1 mb-1" style="background-color: #b6d1c2; color: white;"
+								onmouseover="this.style='background-color: #e0b492; color: white;'"
+								onmouseout="this.style='background-color: #b6d1c2; color: white;'">
+								&#x200B; Unlike &#x200B;
+							</span>
+						</a>
+					</form>
+					
+				<!-- Current user has NOT liked post
+				{% else %}
+					<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+					<form action="{% url 'like_post' post.pk %}" method="POST" id="form_post_{{ post.id }}2" target="dummyframe">
+						{% csrf_token %}
+						<a href="javascript:;" style="text-decoration: none;" 
+						onclick="document.getElementById('form_post_{{ post.id }}2').submit(); window.parent.location.reload(); event.stopPropagation();">
+						<input type="hidden" name="post_id" value={{ post.id }}>
+						<span class="badge badge-light badge-pill ml-2 mt-1 mb-1" style="background-color: #e6e6e6;"
+							onmouseover="this.style='background-color: #0080ff; color: white;'"
+							onmouseout="this.style='background-color: #f7f7f7;'">
+							&#x200B; Like &#x200B;
+						</span>
+					</a>
+				</form>
+				{% endif %}
+				
+				<span class="badge badge-dark badge-pill ml-1 mt-1 mb-1" style="background-color: #7bb593;">&#x200B; 
+				{{ post.total_likes }} likes &#x200B;</span>
+			</div>
+			-->
+		<!-- Desktop -->
+		{% else %}
+		<!--
+			{% if post.title == 'Announcement' %}
+				<article class="media content-section shadow_effect_light" style="border: 3px solid rgba(52, 164, 235, 0.30)"
+						onmouseover="this.style.backgroundColor = 'rgba(250, 250, 250, 0.10)'; style.cursor = 'pointer';"
+						onmouseout="this.style.backgroundColor = '';"
+						onclick="window.location.href='{% url 'post-detail' post.id %}';">
+			{% else %}
+				<article class="media content-section shadow_effect_light"
+						onmouseover="this.style.backgroundColor = 'rgba(250, 250, 250, 0.10)'; style.cursor = 'pointer';"
+						onmouseout="this.style.backgroundColor = '';"
+						onclick="window.location.href='{% url 'post-detail' post.id %}';">
+			{% endif %}
+			  <a href="{% url 'user-posts' post.author.username %}"><img class="rounded-circle article-img thumb_effect thumb_shadow" src="{{ post.author.profile.image.url }}"></a>
+			  <div class="media-body">
+				<div class="article-metadata d-flex">
+					<b><a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a></b>
+					<div><small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small></div>
+					<span class="ml-auto mt-1 mb-1"></span>
+					
+					<!-- Comments Button -->
+					<!--
+					<a href="{% url 'post-detail' post.id %}" style="text-decoration: none;">
+						<span class="badge badge-light badge-pill ml-2 mt-1 mb-1" style="background-color: #f7f7f7;"
+							onmouseover="this.style='background-color: #e8e8e8;'"
+							onmouseout="this.style='background-color: #f7f7f7;'">
+							0 comments &#x200B;
+						</span>
+					</a>
+					-->
+					
+					<!-- Current user has liked post -->
+					<!--
+					{% if user in post.likes.all %}
+						<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+						<form action="{% url 'dislike_post' post.pk %}" method="POST" id="form_post_{{ post.id }}" target="dummyframe">
+							{% csrf_token %}
+							<a href="javascript:;" style="text-decoration: none;" 
+							onclick="document.getElementById('form_post_{{ post.id }}').submit(); window.parent.location.reload(); event.stopPropagation();">
+							<input type="hidden" name="post_id" value={{ post.id }}>
+							<!-- Current user HAS liked post
+								<span class="badge badge-light badge-pill ml-2 mt-1 mb-1 thumb_effect" style="background-color: #b6d1c2; color: white;"
+									onmouseover="this.style='background-color: #e0b492; color: white;'"
+									onmouseout="this.style='background-color: #b6d1c2; color: white;'">
+									&#x200B; Unlike &#x200B;
+								</span>
+							</a>
+						</form>
+					-->
+					<!-- Current user has NOT liked post -->
+					<!--
+					{% else %}
+						<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+						<form action="{% url 'like_post' post.pk %}" method="POST" id="form_post_{{ post.id }}2" target="dummyframe">
+							{% csrf_token %}
+							<a href="javascript:;" style="text-decoration: none;" 
+							onclick="document.getElementById('form_post_{{ post.id }}2').submit(); window.parent.location.reload(); event.stopPropagation();">
+							<input type="hidden" name="post_id" value={{ post.id }}>
+							<span class="badge badge-light badge-pill ml-2 mt-1 mb-1 thumb_effect" style="background-color: #f7f7f7;"
+								onmouseover="this.style='background-color: #0080ff; color: white;'"
+								onmouseout="this.style='background-color: #f7f7f7;'">
+								&#x200B; Like &#x200B;
+							</span>
+						</a>
+					</form>
+					{% endif %}
+					-->
+					
+					<!-- Total Likes -->
+					<!--
+					<span class="badge badge-dark badge-pill ml-2 mt-1 mb-1" 
+					style="background-color: #7bb593;">
+					&#x200B; {{ post.total_likes }} likes &#x200B;
+					</span>
+					
+				</div>
+				
+				{% if post.title == 'Timesheet' %}
+					<h5 class="article-title"><u>{{ post.title }} Submission</u></h5>
+					<table class="article-content" border="0px" align=left>
+						<tr>
+							<td align='left' style="width:140px">Project Number: </td>
+							<td align='left'><b>{{ post.content_projectNum }}</b></td>
+						</tr>
+						<tr>
+							<td align='left'>Start Time: </td>
+							<td align='left'><b>{{ post.content_timeStart }}</b></td>
+						</tr>
+						<tr>
+							<td align='left'>End Time: </td>
+							<td align='left'><b>{{ post.content_timeEnd }}</b></td>
+						</tr>
+						<tr>
+							<td align='left'>Total Hours: </td>
+							<td align='left'><b>{{ post.get_total_hours }} Hour(s)</b></td>
+						</tr>
+					</table>
+					<br><br>
+				{% elif post.title == 'Task Assignment' %}
+					<h5 class="article-title"><u>{{ post.title }}</u></h5>
+						<table class="article-content" border="0px" align=left>
+							<tr>
+								<td align='left' style="width:140px">User ID: </td>
+								<td align='left'><b>{{ post.content_userID}}</br></td>
+							</tr>
+							<tr>
+								<td align='left'>Project Number: </td>
+								<td align='left'><b>{{ post.content_projectNum }}</b></td>
+							</tr>
+						</table>
+						<br><br><br>
+						<h6 class="article-title">Content</h6>
+						<p class="article-content">{{ post.content|safe }}</p>
+				{% else %}
+					<h5 class="article-title">{{ post.title }}</h5>
+					<p class="article-content">{{ post.content|safe }}</p>
+				{% endif %}
+			</article>
+		{% endif %}
+		-->
+	{% endfor %}
+{% endblock content %}
+

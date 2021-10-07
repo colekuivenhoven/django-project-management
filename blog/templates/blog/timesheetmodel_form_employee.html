@@ -1,0 +1,104 @@
+{% extends "blog/base_employee.html" %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block content %}
+
+<script>
+	$(document).ready(function(){
+	 $('#list-tab a[href="{% url 'create-job' %}"]').tab('show')
+	});
+</script>
+<a class="ml-2" href="javascript:;" style="text-decoration: none;">
+<input type="hidden">
+	<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #67ace6; color: white;"
+		onmouseover="this.style='background-color: #4d718f; color: white;'"
+		onmouseout="this.style='background-color: #67ace6; color: white;'"
+		onclick="window.history.back();return false;">
+		&#x200B; << Back &#x200B;
+	</span>
+</a>
+<div class="content-section-side shadow_effect_only">
+	<form method="POST">
+		{% csrf_token %}
+		<fieldset class="form-group">
+			<div style="display:none;">{{ form.title|as_crispy_field }}</div>
+			<legend class="border-bottom mb-4">{{ entry_title }}</legend>
+			{% if request.user_agent.is_mobile %}
+			<table class="mb-2" border="0px" align=left>
+				<tr>
+					<td align='left'>Employee ID*</td>
+					<td align='left'>Timesheet ID*</td>
+				</tr>
+				<tr>
+					<td style="background-color: orange;">{{ form.employee_id|attr:"readonly" }}</td>
+					<td style="background-color: orange;">{{ form.sheet_id|attr:"readonly" }}</td>
+				</tr>
+			</table>
+			<br><br><br>
+			<table class="mb-2" border="0px" align=left>
+				<tr>
+					<td align='left'>Job ID*</td>
+					<td align='left'>Status*</td>
+					
+				</tr>
+				<tr>
+					<td>{{ form.project_num }}</td>
+					<td>{{ form.status }}</td>
+
+				</tr>
+			</table>
+			<br><br><br>
+			<table class="mb-2" border="0px" align=left>
+				<tr>
+					<td align='left'>Start Time*</td>
+					<td align='left'>End Time*</td>
+				</tr>
+				<tr>
+					<td>{{ form.time_start|attr:"type:time" }}</td>
+					<td>{{ form.time_end|attr:"type:time" }}</td>
+				</tr>
+			</table>
+			{% else %}
+			<table class="mb-2" border="0px" align=left>
+				<tr>
+					<td align='left'>Employee ID*</td>
+					<td align='left'>Timesheet ID*</td>
+				</tr>
+				<tr>
+					<td style="width: 150px;">{{ form.employee_id|attr:"readonly" }}</td>
+					<td style="background-color: orange;">{{ form.sheet_id|attr:"readonly" }} <b>{{ date }}</b></td>
+				</tr>
+			</table>
+			<br><br><br>
+			<table class="mb-2" border="0px" align=left>
+				<tr>
+					<td align='left' style="width: 150px;">Job ID*</td>
+					<td align='left'>Status*</td>
+					
+				</tr>
+				<tr>
+					<td>{{ form.project_num }}</td>
+					<td>{{ form.status }}</td>
+
+				</tr>
+			</table>
+			<br><br><br>
+			<table class="mb-2" border="0px" align=left>
+				<tr>
+					<td align='left' style="width: 150px;">Start Time*</td>
+					<td align='left'>End Time*</td>
+				</tr>
+				<tr>
+					<td>{{ form.time_start|attr:"type:time" }}</td>
+					<td>{{ form.time_end|attr:"type:time" }}</td>
+				</tr>
+			</table>
+		{% endif %}
+		</fieldset>
+		<div class="form-group d-flex">
+			<a class="btn btn-outline-secondary ml-auto" onclick="window.history.back();return false;">Cancel</a>
+			<button class="btn btn-outline-primary ml-2 mr-3" type="submit">Create</button>
+		</div>
+	</form>
+</div>
+{% endblock content %}

@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	
+	<!-- jQuery -->
+	<script src="jquery-3.5.1.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	  $('[data-toggle="tooltip"]').tooltip();   
+	});
+	</script>
+
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
+	{% if title %}
+		<title>Cyltex Data Manager - {{ title }}</title>
+	{% else %}
+		<title>Cyltex Data Manager</title>
+	{% endif %}
+	
+</head>
+<body>
+	<header class="site-header">
+	  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top shadow_effect">
+		{% if request.user_agent.is_mobile %}
+		<div class="container">
+		{% else %}
+		<div>
+		{% endif %}
+			{% if request.user_agent.is_mobile %}
+			<a class="ml-1 thumb_effect_light" href="{% url 'portal-home' %}"><img src="/media/cyltex-banner.png" width="100px"
+			onmouseover="this.src='/media/cyltex-banner-dark.png'"
+			onmouseout="this.src='/media/cyltex-banner.png'"
+			alt="">
+			</a>
+			<span style="color: white;"><b></b></span>
+			{% else %}
+			<a class="ml-3 thumb_effect_light" href="{% url 'portal-home' %}"><img src="/media/cyltex-banner.png" width="100px"
+			onmouseover="this.src='/media/cyltex-banner-dark.png'"
+			onmouseout="this.src='/media/cyltex-banner.png'"
+			alt="">
+			</a>
+			<span style="color: white;"><b></b></span>
+			{% endif %}
+		  
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation" style="outline: none;">
+		  <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarToggle">
+			<div class="navbar-nav mr-auto">
+			  
+			</div>
+			<!-- Navbar Right Side -->
+			<div class="navbar-nav">
+			{% if request.user_agent.is_mobile %}
+				
+		    {% else %}
+			<!-- Desktop -->
+					
+					{% if user.groups.all.1.name == 'CEO' %}
+						<!-- Admin Button -->
+						<a class="ml-4 thumb_outline" href="/admin"><img class="" src="/media/admin_white.png" width="30px"
+						onmouseover="this.src='/media/admin_dark.png'"
+						onmouseout="this.src='/media/admin_white.png'"
+						alt=""
+						data-toggle="tooltip"
+						data-placement="bottom"
+						title="Admin Portal">
+						</a>
+					{% endif %}
+					<!-- Logout Button -->
+					<!--
+					<a class="ml-4 thumb_outline" href="{% url 'logout' %}"><img class="" src="/media/login_white.png" width="30px"
+					onmouseover="this.src='/media/login_dark.png'"
+					onmouseout="this.src='/media/login_white.png'"
+					alt=""
+					data-toggle="tooltip"
+					data-placement="bottom"
+					title="Logout">
+					</a>
+					-->
+					<!-- User Button -->
+					<!--
+					<a class="ml-4 mr-2 thumb_outline thumb_outline_user" href="{% url 'profile' %}"><img class="rounded-circle" src="{{ user.profile.image.url }}" width="30px"
+					onmouseover="this.src='{{ user.profile.image.url }}'"
+					onmouseout="this.src='{{ user.profile.image.url }}'"
+					alt=""
+					data-toggle="tooltip"
+					data-placement="bottom"
+					title="Profile">
+					</a>
+					-->
+			{% endif %}
+			</div>
+			<!-- Old Nav Bar -->
+			<!--
+			<div class="navbar-nav">
+			  {% if user.is_authenticated %}
+			    <a href="{% url 'profile' %}"><img class="rounded-circle site-header-img" src="{{ user.profile.image.url }}"></a>
+				<a class="nav-item nav-link active" href="{% url 'profile' %}" style="color:#FDF6DC;">{{user.username}}</a>
+				{% if user.username == 'cadmin' %}
+				  <a class="nav-item nav-link" href="/admin">Admin Portal</a>
+				{% endif %}
+				<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+			  {% else %}
+			    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+				<a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+			  {% endif %}
+			</div>
+			-->
+		  </div>
+		</div>
+	  </nav>
+	</header>
+	{% if request.user_agent.is_mobile %}
+	<div class="portal_mobile">
+		<div class="portal_btn_group_mobile" align=center
+		onclick="window.location.href='{% url 'employee-home' %}';">
+			<a class="mb-3 mt-5" href="{% url 'employee-home' %}" style="text-decoration: none;">
+			<h4 class="portal_btn">Employee Portal</h4>
+			</a>
+		</div>
+		<div class="portal_btn_group_mobile" align=center
+		onclick="window.location.href='{% url 'admin-home' %}';">
+			<a class="mb-3 mt-5 strokeme" href="{% url 'admin-home' %}" style="text-decoration: none;">
+			<h4 class="portal_btn">Administrator Portal</h4>
+			</a>
+		</div>
+	</div>	
+	{% else %}
+	<div class="portal">
+		<div class="portal_btn_group" align=center
+		onclick="window.location.href='{% url 'employee-home' %}';">
+			<a class="mb-3 mt-5" href="{% url 'employee-home' %}" style="text-decoration: none;">
+			<h2 class="portal_btn">Employee Portal</h2>
+			</a>
+		</div>
+		<div class="portal_btn_group" align=center
+		onclick="window.location.href='{% url 'admin-home' %}';">
+			<a class="mb-3 mt-5 strokeme" href="{% url 'admin-home' %}" style="text-decoration: none;">
+			<h2 class="portal_btn">Administrator Portal</h2>
+			</a>
+		</div>
+	</div>
+	{% endif %}
+	<!--
+	<main role="main" class="container-fluid">
+		<div class="row content-section">
+			<div class="col-md-8" style="height:500px">
+				<div style="text-align:right;" align=right>
+					<br><br><br><br><br><br><br><br>
+					<a class="ml-auto mr-5 mb-3 mt-5 thumb_outline" href="{% url 'employee-home' %}">Employee Portal</a>
+					<br><br>
+					<a class="ml-auto mr-4 mb-3 mt-5 thumb_outline" href="{% url 'admin-home' %}">Administrator Portal</a>
+				</div>
+			  
+			{% block content %}
+			{% endblock %}
+			</div>
+		</div>
+	</main>
+	-->
+
+	<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script>
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	  coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.maxHeight){
+		  content.style.maxHeight = null;
+		} else {
+		  content.style.maxHeight = content.scrollHeight + "px";
+		} 
+	  });
+	}
+	</script>
+	
+	<script>
+	function myNewFunction(sel) {
+		var emp_pk = sel.options[sel.selectedIndex].value;
+	    document.getElementById("srt").value = emp_pk;
+	}
+	</script>
+	
+	<script>
+	$(document).ready(function(){
+	$('#myform').on('submit', function(e){
+
+		$.ajax({
+			method:'POST',
+			type: "POST",
+			url:"{% url 'portal-home' %}",
+			data:{
+			name: 'John',
+			srtvalue:$('#srt').val(),
+			csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+		}, 
+		success: function(data) {
+			console.log(data); 
+			alert('Data Successfully Posted');
+			
+		},
+		});
+
+	});
+	});
+	</script> 
+</body>
+</html>

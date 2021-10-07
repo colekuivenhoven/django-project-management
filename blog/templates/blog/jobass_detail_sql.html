@@ -1,0 +1,66 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="d-flex">
+	<a class="ml-2 mb-2" href="javascript:;" style="text-decoration: none;">
+		<input type="hidden">
+		<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #67ace6; color: white;"
+			onmouseover="this.style='background-color: #4d718f; color: white;'"
+			onmouseout="this.style='background-color: #67ace6; color: white;'"
+			onclick="window.history.back();return false;">
+			&#x200B; << Back &#x200B;
+		</span>
+	</a>
+	<a class="ml-auto mb-2" href="javascript:;" style="text-decoration: none;">
+		<input type="hidden">
+		<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #adadad; color: white;"
+			onmouseover="this.style='background-color: #e6c667; color: white;'"
+			onmouseout="this.style='background-color: #adadad; color: white;'"
+			onclick="location.reload();">
+			&#x200B; &#x21BB; Refresh &#x200B;
+		</span>
+	</a>
+	<a class="ml-2 mb-2" href="javascript:;" style="text-decoration: none;">
+		<input type="hidden">
+		<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #75c990; color: white;"
+			onmouseover="this.style='background-color: #4e8560; color: white;'"
+			onmouseout="this.style='background-color: #75c990; color: white;'"
+			onclick="window.location.href='{% url 'update-jobass' object.0 %}'">
+			&#x200B; Update &#x200B;
+		</span>
+	</a>
+	<a class="ml-2 mb-2 mr-2" href="javascript:;" style="text-decoration: none;">
+		<input type="hidden">
+		<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #fc6203; color: white;"
+			onmouseover="this.style='background-color: #8c4418; color: white;'"
+			onmouseout="this.style='background-color: #fc6203; color: white;'"
+			onclick="window.location.href='{% url 'delete-jobass' object.0 %}';">
+			&#x200B; Delete &#x200B;
+		</span>
+	</a>
+</div>
+	<article class="media content-section shadow_effect_only">
+	    <div class="media-body">
+			<div class="article-metadata d-flex">
+				<h5 class="article-title">Employee Job Assignment #{{ object.EmployeeJobAssignment_ID }}</h5>
+		</div>
+		
+		<table class="article-content" border="0px" align=left>
+			<tr>
+				<td align='left' style="width:120px"><b>Employee ID: </b></td>
+				<td align='left'>{{ object.Employee_ID }}</td>
+			</tr>
+			<tr style="height: 30px;">
+				<td align='left'><b>Job ID: </b></td>
+				<td align='left'>{{ object.Job_ID }}</td>
+			</tr>
+			<tr>
+				<td align='left' style="vertical-align:top;"><b>Date Assigned: </b></td>
+				<td align='left'>{{ object.EmployeeJobAssignment_Date }}</td>
+			</tr>
+			<tr>
+				<td align='left' style="vertical-align:top;"><b>Status: </b></td>
+				<td align='left'>{{ object.Status }}</td>
+			</tr>
+		</table>
+	</article>
+{% endblock content %}

@@ -1,0 +1,202 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block content %}
+
+<script>
+	$(document).ready(function(){
+	 $('#list-tab a[href="{% url 'create-employee' %}"]').tab('show')
+	});
+</script>
+<a class="ml-2" href="javascript:;" style="text-decoration: none;">
+<input type="hidden">
+	<span class="badge badge-light badge-pill ml-auto mt-1 mb-1 thumb_effect" style="background-color: #67ace6; color: white;"
+		onmouseover="this.style='background-color: #4d718f; color: white;'"
+		onmouseout="this.style='background-color: #67ace6; color: white;'"
+		onclick="window.history.back();return false;">
+		&#x200B; << Back &#x200B;
+	</span>
+</a>
+<div class="content-section-side shadow_effect_only">
+	<form method="POST">
+		{% csrf_token %}
+		<fieldset class="form-group">
+			<legend class="border-bottom mb-4">{{ entry_title }}</legend>
+			{% if request.user_agent.is_mobile %}
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td class="ml-2" align='left'><b>First Name</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.firstName }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td align='left'><b>Last Name</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.lastName }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td align='left'><b>Email Address</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.email }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td align='left'><b>Phone Number</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.phoneNumber }}</td>
+				</tr>
+			</table>
+			<br><br><br><br><br><br>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td class="ml-2" align='left'><b>Job Title</b></td>
+					<td align='left' style="padding-left: 15px;"><b>Payrate</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.job_title }}</td>
+					<td style="padding-left: 15px;">{{ form.pay_rate }}</td>
+				</tr>
+			</table>
+			<br><br><br>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td><b>Type</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.type }}</td>
+				</tr>
+			</table>
+			<br><br><br><br><br><br><br><br>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td class="ml-2" align='left' width=180px><b>Address 1</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.addressLine1 }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td align='left'><b>Address 2</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.addressLine2 }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td align='left'><b>City</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.city }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td align='left'><b>Zipcode</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.zipcode }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td align='left'><b>State</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.state }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td align='left'><b>Status</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.status }}</td>
+				</tr>
+			</table>
+			<br><br><br><br><br><br>
+			{% else %}
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td class="ml-2" align='left'><b>First Name</b></td>
+					<td align='left' style="padding-left: 15px;"><b>Last Name</b></td>
+					<td align='left' style="padding-left: 15px;"><b>Email Address</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.firstName }}</td>
+					<td style="padding-left: 15px;">{{ form.lastName }}</td>
+					<td style="padding-left: 15px;">{{ form.email }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td align='left'><b>Phone Number</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.phoneNumber }}</td>
+				</tr>
+			</table>
+			<br><br><br><br><br><br>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td class="ml-2" align='left'><b>Job Title</b></td>
+					<td align='left' style="padding-left: 15px;"><b>Payrate</b></td>
+					<td align='left' style="padding-left: 15px;"><b>Type</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.job_title }}</td>
+					<td style="padding-left: 15px;">{{ form.pay_rate }}</td>
+					<td style="padding-left: 15px;">{{ form.type }}</td>
+				</tr>
+			</table>
+			<br><br><br>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td class="ml-2" align='left' width=180px><b>Address 1</b></td>
+					<td align='left' style="padding-left: 15px;"><b>Address 2</b></td>
+					<td align='left' style="padding-left: 15px;"><b>City</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.addressLine1 }}</td>
+					<td style="padding-left: 15px;">{{ form.addressLine2 }}</td>
+					<td style="padding-left: 15px;">{{ form.city }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td align='left'><b>State</b></td>
+					<td align='left' style="padding-left: 15px;"><b>Zipcode</b></td>
+				</tr>
+				<tr>
+					<td>{{ form.state }}</td>
+					<td style="padding-left: 15px;">{{ form.zipcode }}</td>
+				</tr>
+			</table>
+			<table border="0px" align=left class="mb-2">
+				<tr>
+					<td class="ml-2" style="padding-left: 15px;" align='left'><b>Status</b></td>
+				</tr>
+				<tr>
+					<td style="padding-left: 15px;">{{ form.status }}</td>
+				</tr>
+			</table>
+			<br><br><br><br><br><br>
+			{% endif %}
+		</fieldset>
+		<div class="form-group d-flex">
+			<a class="btn btn-outline-secondary ml-auto" onclick="window.history.back();return false;">Cancel</a>
+			<button class="btn btn-outline-primary ml-2" type="submit">Create</button>
+		</div>
+	</form>
+</div>
+{% endblock content %}

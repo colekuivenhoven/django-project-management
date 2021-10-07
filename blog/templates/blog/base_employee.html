@@ -1,0 +1,339 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	
+	<!-- jQuery -->
+	<script src="jquery-3.5.1.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	  $('[data-toggle="tooltip"]').tooltip();   
+	});
+	</script>
+
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
+	{% if title %}
+		<title>Cyltex Data Manager - {{ title }}</title>
+	{% else %}
+		<title>Cyltex Data Manager</title>
+	{% endif %}
+	
+</head>
+<body>
+	<header class="site-header">
+	  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top shadow_effect">
+		<div class="container">
+		  {% if request.user_agent.is_mobile %}
+				<a class="ml-1 thumb_effect_light" href="{% url 'employee-home' %}"><img src="/media/cyltex-banner.png" width="100px"
+				onmouseover="this.src='/media/cyltex-banner-dark.png'"
+				onmouseout="this.src='/media/cyltex-banner.png'"
+				alt="">
+				</a>
+				<div class="mr-auto ml-1">
+					<span style="color: white;">Employee ID: {{ emp_id }}</span>
+				</div>
+			{% else %}
+				<a class="ml-3 thumb_effect_light" href="{% url 'employee-home' %}"><img src="/media/cyltex-banner.png" width="100px"
+				onmouseover="this.src='/media/cyltex-banner-dark.png'"
+				onmouseout="this.src='/media/cyltex-banner.png'"
+				alt="">
+				</a>
+				<span class="ml-2" style="color: white;">Employee ID: {{ emp_id }}</span>
+			{% endif %}
+			<!--
+			<div class="d-flex ml-auto">
+				<button type="button" class="btn btn-default dropdown-toggle ml-auto" data-toggle="dropdown">Employee ID <span class="caret"></span></button>
+				<ul class="dropdown-menu scrollable-menu" role="menu">
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+				</ul>
+			</div>
+			-->
+		  
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation" style="outline: none;">
+		  <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarToggle">
+			<div class="navbar-nav mr-auto">
+			  <!-- <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a> -->
+			  <!-- <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a> -->
+			  
+			</div>
+			<!-- Navbar Right Side -->
+			<div class="navbar-nav">
+			{% if request.user_agent.is_mobile %}
+					<a 
+						class="list-group-item list-group-item-action mb-1 mt-2 thumb_effect_light" 
+						id="list-sort-timesheets-all" 
+						href="{% url 'employee-home' %}"
+						role="tab">
+						<b>Home</b>
+					</a>
+					<a 
+						class="list-group-item list-group-item-action mb-1 thumb_effect_light" 
+						id="list-sort-timesheets-all" 
+						href="{% url 'portal-home' %}"
+						role="tab">
+						<b>Back to Portal</b>
+					</a>
+					<a 
+						class="list-group-item list-group-item-action mb-1 thumb_effect_light" 
+						id="list-sort-timesheet" 
+						href="{% url 'employee-detail-sql-employee' emp_id %}"
+						role="tab">
+						<b>My Information</b>
+					</a>
+					<a 
+						class="list-group-item list-group-item-action mb-1 thumb_effect_light" 
+						id="list-sort-timesheets-all" 
+						href="{% url 'all-timesheets-sql-employee' %}"
+						role="tab">
+						<b>Timesheet Data</b>
+					</a>
+					<a 
+						class="list-group-item list-group-item-action mb-1 thumb_effect_light" 
+						id="list-sort-task-all" 
+						href="{% url 'all-tasks-sql-employee' %}"
+						role="tab">
+						<b>Task Assignment Data</b>
+					</a>
+					<a 
+						class="list-group-item list-group-item-action mb-1 thumb_effect_light" 
+						id="list-sort-announcements-all" 
+						href="{% url 'all-announcements-sql-employee' %}"
+						role="tab">
+						<b>Announcement Data</b>
+					</a>
+					<a 
+						class="list-group-item list-group-item-action mb-0 thumb_effect_light" 
+						id="list-sort-task" 
+						href="{% url 'all-jobs-sql-employee' %}"
+						role="tab">
+						<b>My Jobs</b>
+					</a>
+		    {% else %}
+			<!-- Desktop -->
+					<!-- Home Button -->
+					<a class="ml-4 mr-2 thumb_outline" href="{% url 'employee-home' %}"><img src="/media/home.png" width="30px"
+					onmouseover="this.src='/media/home-dark-2.png'"
+					onmouseout="this.src='/media/home.png'"
+					alt=""
+					data-toggle="tooltip"
+					data-placement="bottom"
+					title="Home">
+					</a>
+					<!-- Logout Button -->
+					<a class="ml-4 thumb_outline" href="{% url 'portal-home' %}"><img class="" src="/media/login_white.png" width="30px"
+					onmouseover="this.src='/media/login_dark.png'"
+					onmouseout="this.src='/media/login_white.png'"
+					alt=""
+					data-toggle="tooltip"
+					data-placement="bottom"
+					title="Back to Portal">
+					</a>
+					<!--
+					<!-- Notification Button
+					<a class="ml-4 thumb_outline" href="{% url 'blog-home' %}"><img src="/media/bell_white.png" width="30px"
+					onmouseover="this.src='/media/bell_dark.png'"
+					onmouseout="this.src='/media/bell_white.png'"
+					alt=""
+					data-toggle="tooltip"
+					data-placement="bottom"
+					title="Notifications">
+					</a>
+					-->
+					
+					<!-- Search Button -->
+					<!--
+					<a class="ml-3" href="#"><img src="/media/search_white.png"
+					onmouseover="this.src='/media/search_dark.png'"
+					onmouseout="this.src='/media/search_white.png'"
+					alt="">
+					</a>
+					-->
+					{% if user.groups.all.1.name == 'CEO' %}
+						<!-- Admin Button -->
+						<a class="ml-4 thumb_outline" href="/admin"><img class="" src="/media/admin_white.png" width="30px"
+						onmouseover="this.src='/media/admin_dark.png'"
+						onmouseout="this.src='/media/admin_white.png'"
+						alt=""
+						data-toggle="tooltip"
+						data-placement="bottom"
+						title="Admin Portal">
+						</a>
+					{% endif %}
+					<!-- Logout Button -->
+					<!--
+					<a class="ml-4 thumb_outline" href="{% url 'logout' %}"><img class="" src="/media/login_white.png" width="30px"
+					onmouseover="this.src='/media/login_dark.png'"
+					onmouseout="this.src='/media/login_white.png'"
+					alt=""
+					data-toggle="tooltip"
+					data-placement="bottom"
+					title="Logout">
+					</a>
+					-->
+					<!-- User Button -->
+					<!--
+					<a class="ml-4 mr-2 thumb_outline thumb_outline_user" href="{% url 'profile' %}"><img class="rounded-circle" src="{{ user.profile.image.url }}" width="30px"
+					onmouseover="this.src='{{ user.profile.image.url }}'"
+					onmouseout="this.src='{{ user.profile.image.url }}'"
+					alt=""
+					data-toggle="tooltip"
+					data-placement="bottom"
+					title="Profile">
+					</a>
+					-->
+			{% endif %}
+			</div>
+			<!-- Old Nav Bar -->
+			<!--
+			<div class="navbar-nav">
+			  {% if user.is_authenticated %}
+			    <a href="{% url 'profile' %}"><img class="rounded-circle site-header-img" src="{{ user.profile.image.url }}"></a>
+				<a class="nav-item nav-link active" href="{% url 'profile' %}" style="color:#FDF6DC;">{{user.username}}</a>
+				{% if user.username == 'cadmin' %}
+				  <a class="nav-item nav-link" href="/admin">Admin Portal</a>
+				{% endif %}
+				<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+			  {% else %}
+			    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+				<a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+			  {% endif %}
+			</div>
+			-->
+		  </div>
+		</div>
+	  </nav>
+	</header>
+	
+	<main role="main" class="container">
+	    <div class="row">
+		<div class="col-md-8">
+		  {% if messages %}
+			{% for message in messages %}
+				<div class="alert alert-{{ message.tags }}">
+					{{ message }}
+				</div>
+			{% endfor %}
+		  {% endif %}
+		  
+		  {% block content %}{% endblock %}
+		</div>
+		{% if request.user_agent.is_mobile %}
+			<!-- inset mobile sorting code -->
+		{% else %}
+			<div class="col-md-4">
+			  <div class="content-section-side shadow_effect_only sticky_effect2">
+				<h5>Employee Menu</h5>
+				  <div class="list-group" id="list-tab" role="tablist">
+					<a 
+						class="list-group-item list-group-item-action mb-2 thumb_effect_light" 
+						id="list-sort-timesheet" 
+						href="{% url 'employee-detail-sql-employee' emp_id %}"
+						role="tab">
+						My Information
+					</a>
+					<a 
+						class="list-group-item list-group-item-action mb-2 thumb_effect_light" 
+						id="list-sort-timesheet" 
+						href="{% url 'all-timesheets-sql-employee' %}"
+						role="tab">
+						My Timesheets
+					</a>
+					<a 
+						class="list-group-item list-group-item-action mb-2 thumb_effect_light" 
+						id="list-sort-task" 
+						href="{% url 'all-tasks-sql-employee' %}"
+						role="tab">
+						My Task Assingments
+					</a>
+					<a 
+						class="list-group-item list-group-item-action mb-2 thumb_effect_light" 
+						id="list-sort-task" 
+						href="{% url 'all-jobs-sql-employee' %}"
+						role="tab">
+						My Jobs
+					</a>
+					<a 
+						class="list-group-item list-group-item-action mb-0 thumb_effect_light" 
+						id="list-sort-timesheet" 
+						href="{% url 'all-announcements-sql-employee' %}"
+						role="tab">
+						View Announcements
+					</a>
+				  </div>
+			  </div>
+		  {% endif %}
+		</div>
+	  </div>
+	</main>
+
+	<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script>
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	  coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.maxHeight){
+		  content.style.maxHeight = null;
+		} else {
+		  content.style.maxHeight = content.scrollHeight + "px";
+		}
+	  });
+	}
+	
+	</script>
+	
+	<script>
+	$(document).ready(function(){
+	$('#myform').on('submit', function(e){
+		$.ajax({
+			method:'POST',
+			type: 'POST',
+			url:'/',
+			data:{
+				name: 'John',
+				srtvalue:$('#srt').val(),
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			}, 
+			success: function(data) {
+				console.log(data);
+				alert('Data Successfully Posted');
+				location.reload(true);
+			},
+		});
+		});
+	});
+	</script> 
+</body>
+</html>

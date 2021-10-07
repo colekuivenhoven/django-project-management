@@ -1,0 +1,52 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block content %}
+	<div class="content-section-side shadow_effect_only">
+		<form method="POST">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Post</legend>
+				{{ form.title|attr:"readonly"|as_crispy_field }}
+				{% if request.user_agent.is_mobile %}
+					<table border="0px" align=left class="mb-3">
+						<tr>
+							<td align='left'>User ID*</td>
+						</tr>
+						<tr>
+							<td align='left'>{{ form.content_userID }}</td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td align='left'>Project Number*</td>
+						</tr>
+						<tr>
+							<td align='left'>{{ form.content_projectNum|attr:"type:number"|attr:"pattern:[0-9]{4}+.[0-9]{2}" }}</td>
+						</tr>
+					</table>
+					<br>
+				{% else %}
+					<table border="0px" align=left>
+						<tr>
+							<td align='left'>User ID*</td>
+							<td align='left'></td>
+							<td align='left'>Project Number*</td>
+						</tr>
+						<tr>
+							<td>{{ form.content_userID }}</td>
+							<td></td>
+							<td>{{ form.content_projectNum|attr:"type:number"|attr:"pattern:[0-9]{4}+.[0-9]{2}" }}</td>
+						</tr>
+					</table>
+					<br><br><br>
+				{% endif %}
+				{{ form.content|as_crispy_field }}
+			</fieldset>
+			<div class="form-group d-flex">
+				<a class="btn btn-outline-secondary ml-auto" href="{% url 'blog-home' %}">Cancel</a>
+				<button class="btn btn-outline-primary ml-2" type="submit">Post</button>
+			</div>
+		</form>
+	</div>
+{% endblock content %}

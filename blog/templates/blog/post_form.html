@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block content %}
+	<div class="content-section-side shadow_effect_only">
+		<form method="POST">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Post</legend>
+				<!-- {{ form.media }} -->
+				{{ form.title|attr:"readonly"|as_crispy_field }}
+				{{ form.content|as_crispy_field }}
+			</fieldset>
+			<div class="form-group d-flex">
+				<a class="btn btn-outline-secondary ml-auto" href="{% url 'blog-home' %}">Cancel</a>
+				<button class="btn btn-outline-primary ml-2" type="submit">Post</button>
+			</div>
+		</form>
+	</div>
+{% endblock content %}
